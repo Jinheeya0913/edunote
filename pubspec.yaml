@@ -70,7 +70,7 @@ dev_dependencies:
 
   # UI
   percent_indicator: ^4.0.1 # 프로그레스 바
-  dotted_line: ^3.2.2 # 점선
+  dotted_line: ^3.2.3 # 점선
   badges: ^3.1.2 # 배지 아이콘
   dropdown_button2: ^2.3.9 # 드롭다운 버튼
   bottom_picker: ^2.8.0 #날짜 및 시간 선택 하단 창.

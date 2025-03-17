@@ -49,7 +49,8 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherPopUp> {
       ),
       content: Column(
         children: [
-          Row(
+
+        Row(
             children: [
               Expanded(
                 child: SearchBar(
@@ -77,11 +78,18 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherPopUp> {
             ],
           ),
           const SizedBox(height: CONST_SIZE_20),
-          const DottedLine(
-            direction: Axis.horizontal,
+
+          // 버전 업 이후 width 지정 없이 사용하면 layout 오류 발생
+          const SizedBox(
+            width: 300,
+            child: DottedLine(
+              direction: Axis.horizontal,
+            ),
           ),
+          /**/
           const SizedBox(height: CONST_SIZE_20),
           if (_teacherModel != null) _renderSearchResult(),
+
         ],
       ),
     );
