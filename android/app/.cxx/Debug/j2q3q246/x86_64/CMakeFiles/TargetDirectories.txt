@@ -1,0 +1,2 @@
+E:/WORK/FLUTTER_PROJECT/goodedunote/android/app/.cxx/Debug/j2q3q246/x86_64/CMakeFiles/edit_cache.dir
+E:/WORK/FLUTTER_PROJECT/goodedunote/android/app/.cxx/Debug/j2q3q246/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,27 @@
+enum LECTURE_PAY_ENUM {
+  MONTH,
+  COUNT,
+}
+
+enum LECTURE_CLOSE_STATUS {
+  BEFORE_PARTICIPANTS,
+  BEFORE_DAY,
+  CLOSED,
+}
+
+enum LECTURE_DAY {
+  MON,
+  TUE,
+  THU,
+  WED,
+  FRI,
+  SAT,
+  SUN,
+  ALL,
+}
+
+enum LECTURE_LEVEL{
+  HIGH,
+  MIDDLE,
+  LOW
+}

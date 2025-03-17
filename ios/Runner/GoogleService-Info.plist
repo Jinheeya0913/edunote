@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>911908492740-4uu7joiffcmcq1fncvp8s51oem1t0md8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.911908492740-4uu7joiffcmcq1fncvp8s51oem1t0md8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAc2TD3E_RD7TTeXnpntL5cCKHMtMh-EDc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>911908492740</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>jinjin.com.goodedunote</string>
+	<key>PROJECT_ID</key>
+	<string>edunote-9883e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>edunote-9883e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:911908492740:ios:c6cbe23e468938f8084091</string>
+	<key>DATABASE_URL</key>
+	<string>https://edunote-9883e-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
