@@ -13,6 +13,7 @@ import 'package:goodedunote/user/model/user_model.dart';
 import 'package:goodedunote/user/provider/student_provider.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/student/student_search_teacher_pop.dart';
+import 'package:goodedunote/user/view/student/student_teacher_add_que_pop.dart';
 import 'package:goodedunote/user/view/teacher/teacher_simple_info_pop.dart';
 
 class TeacherListPopUp extends ConsumerStatefulWidget {
@@ -34,7 +35,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
   @override
   void initState() {
     _init();
-    _setRequestList();
+    // _setRequestList();
     _setTeacherList();
     super.initState();
   }
@@ -74,7 +75,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
                   showGeneralDialog(
                     context: context,
                     barrierColor: Colors.black45,
-                    pageBuilder: (_, __, ___) => const SearchTeacherSearchPop(),
+                    pageBuilder: (_, __, ___) => const StudentAddTeacherQuePop(),
                   );
                 },
                 icon: const Icon(Icons.watch_later),
@@ -109,7 +110,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
     );
   }
 
-  Widget renderRequestList(BuildContext context) {
+/*  Widget renderRequestList(BuildContext context) {
     print ('redner RequestList');
     return Column(
       children: [
@@ -138,7 +139,6 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
                       //     }, icon: CONST_ICON_CHECK),
                       IconButton(
                           onPressed: () async {
-                            // Todo 테스트 해보기
                             _cancelConnectRequest(teacherModel);
                           },
                           icon: CONST_ICON_REFUSE),
@@ -157,7 +157,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
           ),
       ],
     );
-  }
+  }*/
 
   Widget renderTeacherList(BuildContext context) {
     print('renderTeacherList');
@@ -170,7 +170,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               itemCount: _teacherList!.length,
-              // physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, index) {
                 final teacherModel = _teacherList![index] as TeacherModel;
                 return Row(
@@ -216,7 +216,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
   }
 
   /// 요청 리스트 조회
-  Future<void> _setRequestList() async {
+  /*Future<void> _setRequestList() async {
     final userId = _user.userId;
 
     print('실행');
@@ -225,7 +225,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
     setState(() {
       _connectRequestList = requestList;
     });
-  }
+  }*/
 
   /// 연결된 선생 리스트 조회linked_status
   Future<void> _setTeacherList() async {
@@ -265,7 +265,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
       setState(() {
         _user = refreshResult.responseObj as StudentModel;
       });
-      _setRequestList();
+      //_setRequestList();
       _setTeacherList();
     }
   }
