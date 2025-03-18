@@ -15,16 +15,16 @@ import 'package:goodedunote/user/provider/student_provider.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/teacher/teacher_simple_info_pop.dart';
 
-class SearchTeacherPopUp extends ConsumerStatefulWidget {
+class SearchTeacherSearchPop extends ConsumerStatefulWidget {
   static String get routeName => 'searchTeacherPop';
 
-  const SearchTeacherPopUp({super.key});
+  const SearchTeacherSearchPop({super.key});
 
   @override
-  ConsumerState<SearchTeacherPopUp> createState() => _SearchTeacherPopUpState();
+  ConsumerState<SearchTeacherSearchPop> createState() => _SearchTeacherPopUpState();
 }
 
-class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherPopUp> {
+class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
   String teacherId = '';
   TeacherModel? _teacherModel;
   LINKED_STATUS? _linkedStatus;
@@ -40,61 +40,65 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherPopUp> {
 
   @override
   Widget build(BuildContext context) {
-
+    final user = ref.read(userProvider) as StudentModel;
+    final state = ref.watch(studentProvider);
     return AlertDialog(
       title: PopupTitle(
         context: context,
         title: Text('티처 추가'),
       ),
-      content: Column(
-        children: [
-
-        Row(
-            children: [
-              Expanded(
-                child: SearchBar(
-                  hintText: '아이디를 입력하세요',
-                  overlayColor: const WidgetStatePropertyAll(CONST_COLOR_MAIN),
-                  shape: WidgetStateProperty.all(
-                    ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
+      content: SizedBox(
+        height: 300,
+        child: Column(
+          children: [
+          Row(
+              children: [
+                Expanded(
+                  child: SearchBar(
+                    hintText: '아이디를 입력하세요',
+                    overlayColor: const WidgetStatePropertyAll(CONST_COLOR_MAIN),
+                    shape: WidgetStateProperty.all(
+                      ContinuousRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    trailing: [
+                      IconButton(
+                          // 검색 버튼
+                          onPressed: () async {
+                            await searchTeacherInfo(context);
+                          },
+                          icon: const Icon(Icons.search)),
+                    ],
+                    onChanged: (val) {
+                      setState(() {
+                        teacherId = val;
+                      });
+                    },
                   ),
-                  trailing: [
-                    IconButton(
-                        // 검색 버튼
-                        onPressed: () async {
-                          await searchTeacherInfo(context);
-                        },
-                        icon: const Icon(Icons.search)),
-                  ],
-                  onChanged: (val) {
-                    setState(() {
-                      teacherId = val;
-                    });
-                  },
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: CONST_SIZE_20),
-
-          // 버전 업 이후 width 지정 없이 사용하면 layout 오류 발생
-          const SizedBox(
-            width: 300,
-            child: DottedLine(
-              direction: Axis.horizontal,
+              ],
             ),
-          ),
-          /**/
-          const SizedBox(height: CONST_SIZE_20),
-          if (_teacherModel != null) _renderSearchResult(),
+            const SizedBox(height: CONST_SIZE_20),
 
-        ],
+            // 버전 업 이후 width 지정 없이 사용하면 layout 오류 발생
+            const SizedBox(
+              width: 300,
+              child: DottedLine(
+                direction: Axis.horizontal,
+              ),
+            ),
+            /**/
+            const SizedBox(height: CONST_SIZE_20),
+            if (_teacherModel != null) _renderSearchResult(),
+
+          ],
+        ),
       ),
     );
   }
 
   Future<void> searchTeacherInfo(BuildContext context) async {
+    print('searchTeacherInfo 검색 시작');
     if (!isEmptyString(teacherId)) {
       ResponseModel searchResult =
           await _studentProvider.searchTeacher(_user.userId, teacherId);
@@ -129,6 +133,7 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherPopUp> {
 
   Widget _renderSearchResult() {
     if (_teacherModel != null) {
+      print('검색 성공 > 결과 출력');
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
