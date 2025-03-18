@@ -41,9 +41,6 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(studentProvider);
-    final user = ref.watch(userProvider) as StudentModel;
-
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -60,22 +57,36 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
           ),
           Row(
             children: [
+              // 선생 검색
               IconButton(
                 onPressed: () {
                   showGeneralDialog(
                     context: context,
                     barrierColor: Colors.black45,
-                    pageBuilder: (_, __, ___) => const SearchTeacherPopUp(),
+                    pageBuilder: (_, __, ___) => const SearchTeacherSearchPop(),
                   );
                 },
-                icon: const Icon(Icons.person_add),
+                icon: const Icon(Icons.person_search),
               ),
+              // 추가 대기열ㅅ
+              IconButton(
+                onPressed: () {
+                  showGeneralDialog(
+                    context: context,
+                    barrierColor: Colors.black45,
+                    pageBuilder: (_, __, ___) => const SearchTeacherSearchPop(),
+                  );
+                },
+                icon: const Icon(Icons.watch_later),
+              ),
+              // refresh 버튼 사용 안 함
+              /*
               IconButton(
                 onPressed: () async {
                   await _refreshUserInfo();
                 },
                 icon: const Icon(Icons.refresh),
-              ),
+              ),*/
               IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -86,16 +97,20 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
           ),
         ],
       ),
-      content: Column(
-        children: [
-          if (_connectRequestList != null) renderRequestList(context),
-          renderTeacherList(context),
-        ],
+      content: SizedBox(
+        height: 300,
+        child: Column(
+          children: [
+            //if (_connectRequestList != null) renderRequestList(context),
+            renderTeacherList(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget renderRequestList(BuildContext context) {
+    print ('redner RequestList');
     return Column(
       children: [
         const Text('요청 목록'),
@@ -105,6 +120,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
             shrinkWrap: true,
             padding: EdgeInsets.zero,
             itemCount: _connectRequestList!.length,
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final connectRequest = _connectRequestList![index];
 
@@ -133,6 +149,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
             },
           ),
         ),
+
         if (_connectRequestList!.isNotEmpty)
           const DottedLine(
             direction: Axis.horizontal,
@@ -143,45 +160,49 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
   }
 
   Widget renderTeacherList(BuildContext context) {
+    print('renderTeacherList');
     if (_teacherList != null) {
       return Column(
         children: [
-          ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: _teacherList!.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) {
-              final teacherModel = _teacherList![index] as TeacherModel;
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${teacherModel.userAlias} 쌤'),
-                  Row(
-                    children: [
-                      IconButton(onPressed: () {}, icon: CONST_ICON_MESSAGE),
-                      IconButton(
-                          onPressed: () {
-                            showGeneralDialog(
-                              context: context,
-                              barrierColor: Colors.black12,
-                              pageBuilder: (_, __, ___) => TeacherSimpleInfoPop(
-                                isConnected: true,
-                                teacherModel: teacherModel,
-                              ),
-                            );
-                          },
-                          icon: const Icon(Icons.more_horiz)),
-                    ],
-                  )
-                ],
-              );
-            },
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: _teacherList!.length,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                final teacherModel = _teacherList![index] as TeacherModel;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${teacherModel.userAlias} 쌤'),
+                    Row(
+                      children: [
+                        IconButton(onPressed: () {}, icon: CONST_ICON_MESSAGE),
+                        IconButton(
+                            onPressed: () {
+                              showGeneralDialog(
+                                context: context,
+                                barrierColor: Colors.black12,
+                                pageBuilder: (_, __, ___) => TeacherSimpleInfoPop(
+                                  isConnected: true,
+                                  teacherModel: teacherModel,
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.more_horiz)),
+                      ],
+                    )
+                  ],
+                );
+              },
+            ),
           ),
         ],
       );
     } else {
-      return Text('선생 목록 없음');
+      return Text('등록된 쌤이 없습니다');
     }
   }
 
