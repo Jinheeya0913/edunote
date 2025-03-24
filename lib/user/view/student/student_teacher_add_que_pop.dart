@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:goodedunote/common/component/button/custom_elevated_button.dart';
 import 'package:goodedunote/common/component/popup/PopupTitle.dart';
+import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
 import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/func/commonFunc.dart';
@@ -11,15 +13,16 @@ import 'package:goodedunote/user/model/teahcer_model.dart';
 import 'package:goodedunote/user/provider/student_provider.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 
-
 class StudentAddTeacherQuePop extends ConsumerStatefulWidget {
   const StudentAddTeacherQuePop({super.key});
 
   @override
-  ConsumerState<StudentAddTeacherQuePop> createState() => _StudentAddTeacherQuePopState();
+  ConsumerState<StudentAddTeacherQuePop> createState() =>
+      _StudentAddTeacherQuePopState();
 }
 
-class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePop> {
+class _StudentAddTeacherQuePopState
+    extends ConsumerState<StudentAddTeacherQuePop> {
   List<ConnectRequestModel>? _connectRequestList;
   late StudentProvider _studentProvider;
   late StudentModel _user;
@@ -31,7 +34,6 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
     _getRequestList();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,8 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
       return SingleChildScrollView(
         child: Column(
           children: _connectRequestList!.map((connectRequest) {
-            final teacherModel = TeacherModel.fromJson(connectRequest.teacherInfo!);
+            final teacherModel =
+                TeacherModel.fromJson(connectRequest.teacherInfo!);
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -87,11 +90,14 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
                       // IconButton(
                       //     onPressed: () async  {
                       //     }, icon: CONST_ICON_CHECK),
-                      IconButton(
+                      TextButton(
                         onPressed: () async {
-                          _cancelConnectRequest(teacherModel);
+                          _cancelRequestPop(teacherModel);
                         },
-                        icon: CONST_ICON_REFUSE,
+                        child: const Text(
+                          '요청 취소',
+                          style: TextStyle(color: Colors.red),
+                        ),
                       ),
                     ],
                   ),
@@ -105,6 +111,7 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
       return const Text('요청한 쌤이 없습니다');
     }
   }
+
   /*Widget renderRequestList(BuildContext context) {
     if (_connectRequestList != null && _connectRequestList!.isNotEmpty) {
       return ListView.builder(
@@ -128,7 +135,6 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
                   //     }, icon: CONST_ICON_CHECK),
                   IconButton(
                       onPressed: () async {
-                        // Todo 테스트 해보기
                         _cancelConnectRequest(teacherModel);
                       },
                       icon: CONST_ICON_REFUSE),
@@ -143,20 +149,45 @@ class _StudentAddTeacherQuePopState extends ConsumerState<StudentAddTeacherQuePo
     }
   }*/
 
-  /// 요청 취소
-  _cancelConnectRequest(TeacherModel teacherModel) async {
+  /// 요청 취소 팝업
+  _cancelRequestPop(TeacherModel teacherModel) {
     showSimpleAlert(
       context: context,
-      title: '요청을 취소하시겠습니까?',
-      onPressed: () async {
-        ResponseModel response = await _studentProvider.cancelConnectRequest(
-            _user.userId, teacherModel.userId);
-        if (response.responseCode == CONST_SUCCESS_CODE) {
-          showSimpleAlert(context: context, title: '요청을 취소하였습니다');
-        } else {
-          showSimpleAlert(context: context, title: '요청을 실패하였습니다. 다시 시도해주세요.');
-        }
-      },
+      title: '요청취소',
+      content: '요청을 취소하시겠습니까?',
+      actions: [
+        CustomElevatedButton(
+          onPressed: () {
+            _cancelRequest(teacherModel);
+          },
+          child: const Text(
+            '확인',
+            style: TextStyle(
+                color: CONST_COLOR_WHITE, fontWeight: FontWeight.bold),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text(
+            '닫기',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+      ],
     );
+  }
+
+  /// 요청 취소
+
+  _cancelRequest(TeacherModel teacherModel) async {
+    ResponseModel response = await _studentProvider.cancelConnectRequest(
+        _user.userId, teacherModel.userId);
+    if (response.responseCode == CONST_SUCCESS_CODE) {
+      showSimpleAlert(context: context, title: '요청을 취소하였습니다');
+    } else {
+      showSimpleAlert(context: context, title: '요청을 실패 하였습니다. 다시 시도해 주세요.');
+    }
   }
 }
