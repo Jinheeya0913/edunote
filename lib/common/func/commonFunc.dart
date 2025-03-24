@@ -12,7 +12,7 @@ showSimpleAlert({
   required BuildContext context,
   String? title,
   String? content,
-  List<ElevatedButton>? actions,
+  List<Widget>? actions,
   VoidCallback? onPressed,
 }) {
   return showDialog(

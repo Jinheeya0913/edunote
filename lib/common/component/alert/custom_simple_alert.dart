@@ -4,7 +4,7 @@ class CustomSimpleAlertPop extends StatefulWidget {
   final String? title;
   final String? content;
   final VoidCallback? onPressed;
-  final List<ElevatedButton>? actions;
+  final List<Widget>? actions;
 
   const CustomSimpleAlertPop({
     this.title,
