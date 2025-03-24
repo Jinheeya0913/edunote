@@ -199,7 +199,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
         ],
       );
     } else {
-      return Text('등록된 쌤이 없습니다');
+      return const Text('등록된 쌤이 없습니다');
     }
   }
 
@@ -243,7 +243,7 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
           _isLoading = false;
         });
       } else {
-        showSimpleAlert(context: context, content: readListResult.responseMsg);
+        showAlertPopUp(context: context, content: readListResult.responseMsg);
       }
     } else {
       setState(() {

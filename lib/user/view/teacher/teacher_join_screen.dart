@@ -192,7 +192,7 @@ class _TeacherJoinScreenState extends ConsumerState<TeacherJoinScreen> {
                         String? msg = _validUserInfo();
 
                         if (msg != null) {
-                          showSimpleAlert(
+                          showAlertPopUp(
                               context: context, title: '회원가입', content: msg);
                         } else {
                           TeacherModel teacherModel = TeacherModel(
@@ -220,7 +220,7 @@ class _TeacherJoinScreenState extends ConsumerState<TeacherJoinScreen> {
                             callbackFunc = goToMain();
                           }
 
-                          showSimpleAlert(context: context,
+                          showAlertPopUp(context: context,
                               title: '회원가입',
                               content: msg,
                               onPressed: callbackFunc);

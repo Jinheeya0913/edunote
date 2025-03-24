@@ -1,12 +1,14 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:goodedunote/common/component/button/custom_elevated_button.dart';
 import 'package:goodedunote/common/component/popup/PopupTitle.dart';
 import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/const/const_size.dart';
 import 'package:goodedunote/common/func/commonFunc.dart';
 import 'package:goodedunote/common/model/fb_result_model.dart';
+import 'package:goodedunote/user/enum/align_enum.dart';
 import 'package:goodedunote/user/enum/user_enum.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
 import 'package:goodedunote/user/model/student_model.dart';
@@ -21,7 +23,8 @@ class SearchTeacherSearchPop extends ConsumerStatefulWidget {
   const SearchTeacherSearchPop({super.key});
 
   @override
-  ConsumerState<SearchTeacherSearchPop> createState() => _SearchTeacherPopUpState();
+  ConsumerState<SearchTeacherSearchPop> createState() =>
+      _SearchTeacherPopUpState();
 }
 
 class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
@@ -49,12 +52,13 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
         height: 300,
         child: Column(
           children: [
-          Row(
+            Row(
               children: [
                 Expanded(
                   child: SearchBar(
                     hintText: '아이디를 입력하세요',
-                    overlayColor: const WidgetStatePropertyAll(CONST_COLOR_MAIN),
+                    overlayColor:
+                        const WidgetStatePropertyAll(CONST_COLOR_MAIN),
                     shape: WidgetStateProperty.all(
                       ContinuousRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
@@ -88,7 +92,6 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
             /**/
             const SizedBox(height: CONST_SIZE_20),
             if (_teacherModel != null) _renderSearchResult(),
-
           ],
         ),
       ),
@@ -117,7 +120,7 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
           _linkedStatus = linkedStatus;
         });
       } else {
-        showSimpleAlert(
+        showAlertPopUp(
             context: context, title: '검색결과', content: '검색 결과가 존재하지 않습니다');
         setState(() {
           _teacherModel = null;
@@ -125,7 +128,7 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
         });
       }
     } else {
-      showSimpleAlert(context: context, title: '입력오류', content: '검색ID를 입력해주세요');
+      showAlertPopUp(context: context, title: '입력오류', content: '검색ID를 입력해주세요');
     }
   }
 
@@ -139,6 +142,7 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
           Row(
             children: [
               _RenderIconBaseOnLinkedStatus(_user, _teacherModel!),
+              // 자세히 보기 버튼
               IconButton(
                 icon: const Icon(Icons.person_search),
                 onPressed: () {
@@ -178,18 +182,32 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
     } else if (_linkedStatus == LINKED_STATUS.wait) {
       return IconButton(
         onPressed: () {
-          showSimpleAlert(context: context, title: '요청을 취소하시겠습니까?', actions: [
-            ElevatedButton(
-                onPressed: () async {
-                  await _cancelConnectRequest();
-                },
-                child: Text('예')),
-            ElevatedButton(
+          showAlertPopUp(
+            context: context,
+            title: '요청취소',
+            content: '요청을 취소하시겠습니까?',
+            actions: [
+              CustomElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  _cancelRequest(teacherModel);
                 },
-                child: const Text('아니요')),
-          ]);
+                child: const Text(
+                  '확인',
+                  style: TextStyle(
+                      color: CONST_COLOR_WHITE, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  '닫기',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
+          );
         },
         icon: const Icon(
           Icons.watch_later,
@@ -210,12 +228,12 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
           ResponseModel requestResult = await sendConnectRequest(
               studentState, teacherModel, studentModel);
           if (requestResult.responseCode != CONST_SUCCESS_CODE) {
-            showSimpleAlert(
+            showAlertPopUp(
                 context: context,
                 title: '요청 실패',
                 content: requestResult.responseMsg);
           } else {
-            showSimpleAlert(context: context, title: '요청 성공');
+            showAlertPopUp(context: context, title: '요청 성공');
             setState(() {
               _linkedStatus = LINKED_STATUS.wait;
             });
@@ -250,7 +268,7 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
       });
     } else {
       Navigator.pop(context);
-      showSimpleAlert(
+      showAlertPopUp(
           context: context,
           title: '요청 삭제 실패',
           content:
@@ -265,5 +283,20 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
   ) {
     return studentState.requestConnectToTeacher(
         teacher: teacherModel, student: studentModel);
+  }
+
+  _cancelRequest(TeacherModel teacherModel) async {
+    ResponseModel response = await _studentProvider.cancelConnectRequest(
+        _user.userId, teacherModel.userId);
+    if (response.responseCode == CONST_SUCCESS_CODE) {
+      showAlertPopUp(
+        context: context,
+        content: '추가 요청을 취소하였습니다',
+        content_align: ALIGN_ENUM.CENTER,
+        actions: [],
+      );
+    } else {
+      showAlertPopUp(context: context, title: '요청을 실패 하였습니다. 다시 시도해 주세요.');
+    }
   }
 }

@@ -280,7 +280,7 @@ class _TeacherLectureListScreenState
                                             onPressed: () {
                                               if (lectureStatus ==
                                                   LECTURE_CLOSE_STATUS.CLOSED) {
-                                                showSimpleAlert(
+                                                showAlertPopUp(
                                                     context: context,
                                                     content: '신청 마감된 강의입니다.');
                                                 return;

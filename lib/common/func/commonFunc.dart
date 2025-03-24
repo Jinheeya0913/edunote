@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goodedunote/common/component/alert/custom_simple_alert.dart';
+import 'package:goodedunote/user/enum/align_enum.dart';
 
 
 /// 단순 알림창을 표시하는 함수
@@ -8,12 +9,13 @@ import 'package:goodedunote/common/component/alert/custom_simple_alert.dart';
 /// [content]: 알림창 내용
 /// [actions]: 알림창에서 사용할 버튼 리스트
 /// [onPressed]: 버튼 클릭 시 실행될 콜백 함수
-showSimpleAlert({
+showAlertPopUp({
   required BuildContext context,
   String? title,
   String? content,
   List<Widget>? actions,
   VoidCallback? onPressed,
+  ALIGN_ENUM? content_align,
 }) {
   return showDialog(
     context: context,
@@ -21,6 +23,7 @@ showSimpleAlert({
       title: title,
       content: content,
       onPressed: onPressed,
+      content_align: content_align,
       actions: actions,
     ),
   );

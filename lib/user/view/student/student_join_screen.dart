@@ -176,7 +176,7 @@ class _StudentJoinScreenState extends ConsumerState<StudentJoinScreen> {
                         String? msg = _validUserInfo();
                         print(msg);
                         if (msg != null) {
-                          showSimpleAlert(
+                          showAlertPopUp(
                               context: context, title: '회원가입', content: msg);
                         } else {
                           // Todo. 회원가입 통신 로직 추가
@@ -201,7 +201,7 @@ class _StudentJoinScreenState extends ConsumerState<StudentJoinScreen> {
                             callbackFunc = goToMain();
                           }
 
-                          showSimpleAlert(context: context, title: '회원가입', content: msg, onPressed: callbackFunc);
+                          showAlertPopUp(context: context, title: '회원가입', content: msg, onPressed: callbackFunc);
                         }
                       },
                       style: ElevatedButton.styleFrom(

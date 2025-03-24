@@ -142,7 +142,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         onPressed: () async {
                           String validMsg = validUserInfo();
                           if (validMsg != '') {
-                            showSimpleAlert(
+                            showAlertPopUp(
                                 context: context,
                                 title: '로그인 실패',
                                 content: validMsg);
@@ -159,7 +159,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                               // context.goNamed();
                             } else {
                               // Todo 학부모 로그인 구현
-                              showSimpleAlert(
+                              showAlertPopUp(
                                   context: context,
                                   title: '로그인 실패',
                                   content: '잘못된 계정입니다. 다시 시도해주세요.');

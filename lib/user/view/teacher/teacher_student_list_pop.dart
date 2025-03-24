@@ -172,7 +172,7 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
       children: [
         IconButton(
             onPressed: () async {
-              showSimpleAlert(
+              showAlertPopUp(
                 context: context,
                 content: '요청을 수락 하시겠습니까?',
                 onPressed: () async {
@@ -181,13 +181,13 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
 
                   if (result.responseCode == CONST_SUCCESS_CODE) {
                     Navigator.pop(context);
-                    showSimpleAlert(context: context, title: '요청을 수락하였습니다.');
+                    showAlertPopUp(context: context, title: '요청을 수락하였습니다.');
                     setState(() {
                       _conReqList!.removeAt(index);
                     });
                   } else {
                     Navigator.pop(context);
-                    showSimpleAlert(
+                    showAlertPopUp(
                         context: context,
                         title: '요청에러',
                         content: '다시 시도 바랍니다.');
@@ -198,7 +198,7 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
             icon: CONST_ICON_CHECK),
         IconButton(
             onPressed: () {
-              showSimpleAlert(
+              showAlertPopUp(
                 context: context,
                 title: '요청을 거절 하시겠습니까?',
                 onPressed: () {
@@ -262,7 +262,7 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
   Future<void> _refreshUserInfo() async {
     final refreshResult = await _teacherProvider.refreshTeacherInfo(_user.userId);
     if(refreshResult.responseCode!=CONST_SUCCESS_CODE){
-      showSimpleAlert(context: context, title: refreshResult.responseMsg!);
+      showAlertPopUp(context: context, title: refreshResult.responseMsg!);
     } else {
       setState(() {
         _user = refreshResult.responseObj as TeacherModel;
@@ -277,9 +277,9 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
         await _teacherProvider.refuseConnectRequest(_user.userId, studentId);
 
     if (response.responseCode == CONST_SUCCESS_CODE) {
-      showSimpleAlert(context: context, title: '요청을 거절하였습니다.');
+      showAlertPopUp(context: context, title: '요청을 거절하였습니다.');
     } else {
-      showSimpleAlert(context: context, title: '거절 실패', content: '다시 시도 바랍니다.');
+      showAlertPopUp(context: context, title: '거절 실패', content: '다시 시도 바랍니다.');
     }
   }
 

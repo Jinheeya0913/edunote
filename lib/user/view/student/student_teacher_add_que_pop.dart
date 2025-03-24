@@ -151,7 +151,7 @@ class _StudentAddTeacherQuePopState
 
   /// 요청 취소 팝업
   _cancelRequestPop(TeacherModel teacherModel) {
-    showSimpleAlert(
+    showAlertPopUp(
       context: context,
       title: '요청취소',
       content: '요청을 취소하시겠습니까?',
@@ -185,9 +185,9 @@ class _StudentAddTeacherQuePopState
     ResponseModel response = await _studentProvider.cancelConnectRequest(
         _user.userId, teacherModel.userId);
     if (response.responseCode == CONST_SUCCESS_CODE) {
-      showSimpleAlert(context: context, title: '요청을 취소하였습니다');
+      showAlertPopUp(context: context, title: '요청을 취소하였습니다');
     } else {
-      showSimpleAlert(context: context, title: '요청을 실패 하였습니다. 다시 시도해 주세요.');
+      showAlertPopUp(context: context, title: '요청을 실패 하였습니다. 다시 시도해 주세요.');
     }
   }
 }

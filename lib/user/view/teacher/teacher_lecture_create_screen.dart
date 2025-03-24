@@ -257,7 +257,7 @@ class _TeacherPlanDetailScreenState
                               if(int.parse(val) < 1  || int.parse(val)>7){
                                 _countController.text = '';
                                 lectureCount = null;
-                                showSimpleAlert(context: context, content: '1 이상 7 이하만 입력 가능합니다');
+                                showAlertPopUp(context: context, content: '1 이상 7 이하만 입력 가능합니다');
                                 return;
                               }
 
@@ -444,13 +444,13 @@ class _TeacherPlanDetailScreenState
                       String? validResult = _validInputValues();
 
                       if (validResult != null) {
-                        showSimpleAlert(
+                        showAlertPopUp(
                             context: context,
                             title: '등록 실패',
                             content: validResult);
                       } else {
                         final result = await _registLecture();
-                        showSimpleAlert(
+                        showAlertPopUp(
                             context: context,
                             title: '강의등록',
                             content: result.responseMsg);

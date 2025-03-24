@@ -398,7 +398,7 @@ class _LectureApplyScreenState extends ConsumerState<LectureApplyScreen> {
                           await sendApplyRequest(widget.lecture);
                       if (resultResponse.responseCode == CONST_SUCCESS_CODE) {
                         print('신청 성공');
-                        showSimpleAlert(
+                        showAlertPopUp(
                           context: context,
                           title: '강의 신청',
                           content: '성공적으로 신청하였습니다.',
@@ -408,7 +408,7 @@ class _LectureApplyScreenState extends ConsumerState<LectureApplyScreen> {
                         );
 
                       } else {
-                        showSimpleAlert(
+                        showAlertPopUp(
                             context: context,
                             content: resultResponse.responseMsg);
                       }
@@ -517,18 +517,18 @@ class _LectureApplyScreenState extends ConsumerState<LectureApplyScreen> {
     //요일 선택
     if (!_dayCheckMap['상관없음']! &&
         !_dayCheckMap.values.any((isSelected) => isSelected)) {
-      showSimpleAlert(context: context, content: '희망요일을 선택해주세요!');
+      showAlertPopUp(context: context, content: '희망요일을 선택해주세요!');
       return false;
     }
 
     // 시간 선택
     if (!_noSelectTime && (!_startSelected || !_endSelected)) {
-      showSimpleAlert(context: context, content: '시간대를 선택해주세요!');
+      showAlertPopUp(context: context, content: '시간대를 선택해주세요!');
       return false;
     }
 
     if (_selectedLevel.isEmpty) {
-      showSimpleAlert(context: context, content: 'LEVEL을 선택해주세요');
+      showAlertPopUp(context: context, content: 'LEVEL을 선택해주세요');
       return false;
     }
 

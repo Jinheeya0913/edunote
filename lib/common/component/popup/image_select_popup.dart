@@ -108,14 +108,14 @@ class _ImageSelectPopupState extends ConsumerState<ImageSelectPopup> {
                   final uploadResult= await state.uploadProfileImg(user,file);
 
                   if(uploadResult.responseCode!=CONST_SUCCESS_CODE){
-                    showSimpleAlert(context: context, title: '프로필 업로드 실패', content: uploadResult.responseMsg);
+                    showAlertPopUp(context: context, title: '프로필 업로드 실패', content: uploadResult.responseMsg);
                   } else {
 
                     if(widget.onImageUploadComplete != null){
                      widget.onImageUploadComplete!.call();
                    }
 
-                    showSimpleAlert(context: context, title: '변경완료', onPressed:(){
+                    showAlertPopUp(context: context, title: '변경완료', onPressed:(){
                       Navigator.of(context).pop();
                     });
 
