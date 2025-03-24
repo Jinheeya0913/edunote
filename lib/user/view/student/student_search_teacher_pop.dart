@@ -40,8 +40,6 @@ class _SearchTeacherPopUpState extends ConsumerState<SearchTeacherSearchPop> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.read(userProvider) as StudentModel;
-    final state = ref.watch(studentProvider);
     return AlertDialog(
       title: PopupTitle(
         context: context,
