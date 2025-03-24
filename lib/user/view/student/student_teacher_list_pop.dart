@@ -1,11 +1,9 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
 import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/const/const_text.dart';
 import 'package:goodedunote/common/func/commonFunc.dart';
-import 'package:goodedunote/common/model/fb_result_model.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
 import 'package:goodedunote/user/model/student_model.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';
@@ -24,7 +22,6 @@ class TeacherListPopUp extends ConsumerStatefulWidget {
 }
 
 class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
-  List<ConnectRequestModel>? _connectRequestList;
   List<UserModel>? _teacherList;
   late StudentProvider _studentProvider;
   late StudentModel _user;
@@ -254,36 +251,5 @@ class _TeacherListPopUpState extends ConsumerState<TeacherListPopUp> {
         _isLoading = false;
       });
     }
-  }
-
-  Future<void> _refreshUserInfo() async {
-    final refreshResult =
-        await _studentProvider.refreshStudentInfo(_user.userId);
-    if (refreshResult.responseCode != CONST_SUCCESS_CODE) {
-      showSimpleAlert(context: context, title: refreshResult.responseMsg!);
-    } else {
-      setState(() {
-        _user = refreshResult.responseObj as StudentModel;
-      });
-      //_setRequestList();
-      _setTeacherList();
-    }
-  }
-
-  /// 요청 취소
-  _cancelConnectRequest(TeacherModel teacherModel) async {
-    showSimpleAlert(
-      context: context,
-      title: '요청을 취소하시겠습니까?',
-      onPressed: () async {
-        ResponseModel response = await _studentProvider.cancelConnectRequest(
-            _user.userId, teacherModel.userId);
-        if (response.responseCode == CONST_SUCCESS_CODE) {
-          showSimpleAlert(context: context, title: '요청을 취소하였습니다');
-        } else {
-          showSimpleAlert(context: context, title: '요청을 실패하였습니다. 다시 시도해주세요.');
-        }
-      },
-    );
   }
 }
