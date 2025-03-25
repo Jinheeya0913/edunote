@@ -11,6 +11,7 @@ import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/student/student_teacher_list_pop.dart';
 import 'package:goodedunote/user/view/teacher/teacher_lecture_create_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_lecture_list_screen.dart';
+import 'package:goodedunote/user/view/teacher/teacher_linked_students_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_student_list_pop.dart';
 import 'package:go_router/go_router.dart';
 
@@ -170,20 +171,25 @@ class _UserMyPageScreenState extends ConsumerState<UserMyPageScreen> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () async {
-                            await showGeneralDialog(
-                              barrierDismissible: true,
-                              barrierLabel: 'Dismiss',
-                              context: context,
-                              pageBuilder: (BuildContext context,
-                                  Animation<double> animation,
-                                  Animation<double> secondaryAnimation) {
-                                return ScaleTransition(
-                                  scale: Tween<double>(begin: 0.5, end: 1.0)
-                                      .animate(animation),
-                                  child: StudentListPopUp(),
-                                );
-                              },
-                            );
+                            // 팝업 이동 방식
+                            // await showGeneralDialog(
+                            //   barrierDismissible: true,
+                            //   barrierLabel: 'Dismiss',
+                            //   context: context,
+                            //   pageBuilder: (BuildContext context,
+                            //       Animation<double> animation,
+                            //       Animation<double> secondaryAnimation) {
+                            //     return ScaleTransition(
+                            //       scale: Tween<double>(begin: 0.5, end: 1.0)
+                            //           .animate(animation),
+                            //       child: StudentListPopUp(),
+                            //     );
+                            //   },
+                            // );
+
+                            // 페이지 이동으로 변경
+                            context.goNamed(TeacherLinkedStudentScreen.routeName);
+
                           },
                           child: const Text(
                             '학생관리',

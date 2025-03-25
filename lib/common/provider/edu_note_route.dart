@@ -15,6 +15,7 @@ import 'package:goodedunote/user/view/teacher/teacher_join_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_lecture_aaply_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_lecture_create_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_lecture_list_screen.dart';
+import 'package:goodedunote/user/view/teacher/teacher_linked_students_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_root.dart';
 import 'package:goodedunote/user/view/user_login_screen.dart';
 
@@ -123,6 +124,14 @@ class AuthStatusProvider extends ChangeNotifier {
             TeacherRootScreen.routeName,
           ),
           routes: [
+            GoRoute(
+              path: '/linkedStudentList',
+              name: TeacherLinkedStudentScreen.routeName,
+              pageBuilder: (_, __) => buildPageWithTransition(
+                TeacherLinkedStudentScreen(),
+                TeacherLinkedStudentScreen.routeName,
+              ),
+            ),
             GoRoute(
               path: '/createLecture',
               name: TeacherLectureCreateScreen.routeName,
