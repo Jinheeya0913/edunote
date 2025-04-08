@@ -11,7 +11,9 @@ class DefaultLayout extends StatefulWidget {
   final Widget? bottomNavigationBar;
   final bool? useDrawer;
   final bool? useAppBar;
-  final bool? useBackBtn;
+  final bool? useBackBtn; // 뒤로가기 버튼 활성화
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final FloatingActionButton? floatingActionButton;
 
   const DefaultLayout({
     super.key,
@@ -21,6 +23,9 @@ class DefaultLayout extends StatefulWidget {
     this.useDrawer = false,
     this.useBackBtn = false,
     this.useAppBar = true,
+    /// Float 버튼 위치
+    this.floatingActionButtonLocation = null,
+    this.floatingActionButton = null,
   });
 
   @override
@@ -45,6 +50,9 @@ class _DefaultLayoutState extends State<DefaultLayout> {
           ),
         ),
         bottomNavigationBar: widget.bottomNavigationBar,
+        // 반드시 location과 button 둘 다 모 두 있어야 활성화
+        floatingActionButtonLocation: widget.floatingActionButton != null ? widget.floatingActionButtonLocation  : null,
+        floatingActionButton: widget.floatingActionButtonLocation != null ? widget.floatingActionButton : null,
       ),
     );
   }
