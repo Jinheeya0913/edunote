@@ -13,7 +13,7 @@ class DefaultLayout extends StatefulWidget {
   final bool? useAppBar;
   final bool? useBackBtn; // 뒤로가기 버튼 활성화
   final FloatingActionButtonLocation? floatingActionButtonLocation;
-  final FloatingActionButton? floatingActionButton;
+  final Widget? floatingActionButton;
 
   const DefaultLayout({
     super.key,
