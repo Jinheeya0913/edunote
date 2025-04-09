@@ -13,8 +13,8 @@ import 'package:goodedunote/user/provider/teacher_provider.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/student/student_simple_info_pop.dart';
 
-import '../../../common/const/const_response.dart';
-import '../../../common/const/const_size.dart';
+import '../../../../common/const/const_response.dart';
+import '../../../../common/const/const_size.dart';
 
 enum LIST_GUBUN { student, request_wait }
 

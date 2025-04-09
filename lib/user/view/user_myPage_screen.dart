@@ -9,9 +9,9 @@ import 'package:goodedunote/user/model/student_model.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/student/student_teacher_list_pop.dart';
-import 'package:goodedunote/user/view/teacher/teacher_lecture_create_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_lecture_list_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_linked_students_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/teacher_lecture_create_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/teacher_lecture_list_screen.dart';
+import 'package:goodedunote/user/view/teacher/student_management/teacher_linked_students_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_student_list_pop.dart';
 import 'package:go_router/go_router.dart';
 
