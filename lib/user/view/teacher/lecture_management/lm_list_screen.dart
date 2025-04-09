@@ -20,7 +20,7 @@ import 'package:goodedunote/user/func/user_func.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
-import 'package:goodedunote/user/view/teacher/lecture_management/teacher_lecture_aaply_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/lm_aaply_screen.dart';
 
 class TeacherLectureListScreen extends ConsumerStatefulWidget {
   static String get routeName => 'teacherLectureList';

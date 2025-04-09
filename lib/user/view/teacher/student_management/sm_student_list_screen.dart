@@ -3,18 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
-import 'package:goodedunote/common/const/const_text.dart';
 import 'package:goodedunote/common/layout/default_layout.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
 import 'package:goodedunote/user/model/student_model.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';
-import 'package:goodedunote/user/provider/student_provider.dart';
 import 'package:goodedunote/user/provider/teacher_provider.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:goodedunote/user/view/student/student_simple_info_pop.dart';
 
 import '../../../../common/const/const_response.dart';
-import '../../../../common/const/const_size.dart';
 
 enum LIST_GUBUN { student, request_wait }
 

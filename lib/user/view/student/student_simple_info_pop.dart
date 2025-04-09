@@ -4,7 +4,7 @@ import 'package:goodedunote/common/component/popup/PopupTitle.dart';
 import 'package:go_router/go_router.dart';
 import 'package:goodedunote/common/const/const_size.dart';
 import 'package:goodedunote/user/model/student_model.dart';
-import 'package:goodedunote/user/view/teacher/lecture_management/teacher_lecture_create_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/lm_create_screen.dart';
 
 class StudentSimpleInfoPop extends StatefulWidget {
   final StudentModel studentModel;

@@ -11,11 +11,11 @@ import 'package:goodedunote/user/model/user_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:goodedunote/user/view/student/student_join_screen.dart';
 import 'package:goodedunote/user/view/student/student_root.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/lm_list_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_join_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_lecture_aaply_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_lecture_create_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_lecture_list_screen.dart';
-import 'package:goodedunote/user/view/teacher/teacher_linked_students_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/lm_aaply_screen.dart';
+import 'package:goodedunote/user/view/teacher/lecture_management/lm_create_screen.dart';
+import 'package:goodedunote/user/view/teacher/student_management/sm_student_list_screen.dart';
 import 'package:goodedunote/user/view/teacher/teacher_root.dart';
 import 'package:goodedunote/user/view/user_login_screen.dart';
 
