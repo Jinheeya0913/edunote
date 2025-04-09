@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
 import 'package:goodedunote/common/const/const_text.dart';
@@ -33,10 +34,6 @@ class _TeacherLinkedStudentsScreenState
   // Provider
   late TeacherProvider _teacherProvider;
 
-  // 상단 리스트 선택 컨트롤러
-  late TabController tabController =
-      TabController(length: 2, vsync: this, initialIndex: 0);
-
   int index = 0;
 
   List<ConnectRequestModel>? _conReqList;
@@ -45,14 +42,19 @@ class _TeacherLinkedStudentsScreenState
 
   bool _isLoading = true;
 
+
+  // speed_dial
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  bool customDialRoot = true;
+  bool extend = false;
+  bool rmIcons = false;
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    // controller 설정
-    tabController = TabController(length: 2, vsync: this);
-    tabController.addListener(_tabListener);
 
     // init
     _initProvider();
@@ -61,98 +63,67 @@ class _TeacherLinkedStudentsScreenState
   }
 
   @override
-  void dispose() {
-    // 페이지가 dispose 되면서 리스너 초기화
-    tabController.removeListener(_tabListener);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: Text('학생목록'),
+      title: Text('학생관리'),
       useBackBtn: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        spacing: 3,
+        openCloseDial: isDialOpen,
+        childPadding: EdgeInsets.all(5),
+        spaceBetweenChildren: 4,
+        children: [
+          SpeedDialChild(
+            label: '추가',
+            labelBackgroundColor: CONST_COLOR_ALL,
+            child: !rmIcons ? const Icon(Icons.person_add_alt_1) : null,
+            backgroundColor: CONST_COLOR_MAIN,
+            onTap: () => setState(()=> rmIcons = !rmIcons),
+            onLongPress: ()=> print('FIRST CHILD LONG PRESS'),
+          ),
+          SpeedDialChild(
+            label: '요청함',
+            labelBackgroundColor: CONST_COLOR_ALL,
+            child: !rmIcons ? const Icon(Icons.call_made) : null,
+            backgroundColor: Colors.green,
+            onTap: () => setState(()=> rmIcons = !rmIcons),
+            onLongPress: ()=> print('FIRST CHILD LONG PRESS'),
+          ),
+          SpeedDialChild(
+            label: '요청 수신함',
+            labelBackgroundColor: CONST_COLOR_ALL,
+            child: !rmIcons ? const Icon(Icons.timelapse) : null,
+            backgroundColor: Colors.deepOrangeAccent,
+            onTap: () => setState(()=> rmIcons = !rmIcons),
+            onLongPress: ()=> print('FIRST CHILD LONG PRESS'),
+          ),
+        ],
+      ),
       child: Column(
         children: [
-          // 리스트 출력 선택 탭
-          Container(
-            // height: 45,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(CONST_BORDER_RADIUS_CIR10),
-            ),
-            child: TabBar(
-              controller: tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicator: BoxDecoration(
-                color: Colors.blue[300],
-                borderRadius: BorderRadius.circular(CONST_BORDER_RADIUS_CIR10),
-              ),
-              tabs: [
-                const Tab(
-                  child: Text(
-                    '학생목록',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
-                Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '대기 목록',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        width: CONST_SIZE_8,
-                      ),
-                      Container(
-                        height: 20,
-                        width: 20,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: CONST_COLOR_WHITE,
-                        ),
-                        alignment: Alignment.center,
-                        child: _conReqList != null
-                            ? Text(
-                                _conReqList!.length.toString(),
-                                style: const TextStyle(
-                                  fontSize: CONST_TEXT_10,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              )
-                            : null,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-              dividerColor: Colors.transparent,
-
-              onTap: (int i) {
-                tabController.animateTo(i);
-              },
-              // labelColor: Colors.black, // 탭 아이템 색상
-            ),
-          ),
-          // content
           Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: [
-                Center(
-                  child: Container(
-                    child: Text('1'),
-                  ),
-                ),
-                _conReqList != null ? _renderReqList(_conReqList!) : const Text('요청 없음'),
-
-              ],
+            child: Center(
+              child: Container(
+                child: Text('1'),
+              ),
             ),
           ),
+
+          /*
+          *  _conReqList != null
+                    ? _renderReqList(_conReqList!)
+                    : const Text('요청 없음'),
+                    *
+                    * */
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('+')
+            ],
+          )
         ],
       ),
     );
@@ -266,25 +237,55 @@ class _TeacherLinkedStudentsScreenState
     );
   }
 
-  _tabListener() {
-    setState(() {
-      index = tabController.index;
-    });
-  }
-
-  _renderReqList(List<ConnectRequestModel> list){
+  _renderReqList(List<ConnectRequestModel> list) {
     return SingleChildScrollView(
       child: Column(
-        children: [
+        children: _conReqList!.map((conRequest) {
+          final studentModel = StudentModel.fromJson(conRequest.studentInfo!);
 
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 요청 취소
+                Row(
+                  children: [
+                    const Icon(
+                      // Icons.call_received,
+                      // Icons.call_made_sharp,
+                      Icons.notifications_active,
+                      color: Colors.blue,
+                    ),
+                    Text(studentModel.userAlias),
+                  ],
+                ),
+                Row(
+                  children: [
+                    // IconButton(
+                    //     onPressed: () async  {
+                    //     }, icon: CONST_ICON_CHECK),
+                    TextButton(
+                      onPressed: () async {
+                        // _cancelRequestPop(teacherModel);
+                      },
+                      child: const Text(
+                        '요청 취소',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }).toList(),
 
-          // Center(
-          //   child:
-          //       Text(_conReqList![0].studentId)
-          // ),
-        ],
+        // Center(
+        //   child:
+        //       Text(_conReqList![0].studentId)
+        // ),
       ),
     );
-
   }
 }
