@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:goodedunote/common/const/const_response.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/common/func/datetimeFunc.dart';
 import 'package:goodedunote/common/model/fb_result_model.dart';
 import 'package:goodedunote/common/provider/firebase/fb_storage_provider.dart';
@@ -114,6 +114,8 @@ class StudentProvider {
         print('data length : ${dataList.length}');
         for (var data in dataList) {
           var dataModel = ConnectRequestModel.fromJson(data);
+          print('confirmAllConnectRequest ${dataModel.studentId}');
+          print('confirmAllConnectRequest ${dataModel.teacherId}');
 
           if (dataModel.linked_status != LINKED_STATUS.linked) {
             // 이미 연결이 돼 있는 것들은 추가 안함

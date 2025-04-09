@@ -4,7 +4,7 @@ import 'package:goodedunote/common/component/popup/PopupTitle.dart';
 import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
 import 'package:goodedunote/common/const/const_response.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/common/model/fb_result_model.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

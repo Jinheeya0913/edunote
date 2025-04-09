@@ -1,4 +1,4 @@
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/common/func/datetimeFunc.dart';
 import 'package:goodedunote/edu/enum/edu_enum.dart';
 import 'package:goodedunote/edu/model/lecture_model.dart';

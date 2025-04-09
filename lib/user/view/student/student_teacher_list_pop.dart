@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:goodedunote/common/const/const_icon.dart';
 import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/const/const_text.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
 import 'package:goodedunote/user/model/student_model.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goodedunote/common/const/const_color.dart';
 import 'package:goodedunote/common/const/const_size.dart';
 import 'package:goodedunote/common/component/text/custom_text_input_field.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/common/layout/default_layout.dart';
 import 'package:goodedunote/user/model/student_model.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';

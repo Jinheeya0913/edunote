@@ -6,7 +6,7 @@ import 'package:goodedunote/common/component/custom_elevated_button.dart';
 import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/const/const_size.dart';
 import 'package:goodedunote/common/const/const_text.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/user/model/user_model.dart';
 import 'package:goodedunote/user/provider/user_provider.dart';
 import 'package:image_picker/image_picker.dart';

@@ -5,7 +5,7 @@ import 'package:goodedunote/common/const/const_response.dart';
 import 'package:goodedunote/common/const/const_size.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:goodedunote/common/const/const_text.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/common/model/fb_result_model.dart';
 import 'package:goodedunote/user/enum/user_enum.dart';
 import 'package:goodedunote/user/model/connect_model.dart';
@@ -63,21 +63,47 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
               fontSize: CONST_TEXT_20,
             ),
           ),
-          IconButton(
-              onPressed: () {
-                _refreshUserInfo();
-              },
-              icon: const Icon(Icons.refresh)),
+          Row(
+            children: [
+              // 학생 검색창
+              IconButton(
+                onPressed: () {
+
+                },
+                icon: const Icon(Icons.person_search),
+              ),
+              // 요청 대기창
+              IconButton(
+                onPressed: () {
+
+                },
+                icon: const Icon(Icons.timelapse),
+              ),
+              IconButton(
+                onPressed: () {
+                  _refreshUserInfo();
+                },
+                icon: const Icon(Icons.refresh),
+              ),
+            ],
+          ),
         ],
       ),
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (_conReqList != null)
-            if (_conReqList!.isNotEmpty) renderRequestList(context),
-          SizedBox(height: CONST_SIZE_8),
-          _studentList != null ? renderStudentList() : Text('학생 없음'),
-        ],
+      content: SizedBox(
+        height: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // if (_conReqList != null)
+            //   if (_conReqList!.isNotEmpty) renderRequestList(context),
+            // SizedBox(height: CONST_SIZE_8),
+            _studentList != null
+                ? renderStudentList()
+                : Center(
+                    child: Text('학생 없음'),
+                  ),
+          ],
+        ),
       ),
     );
   }
@@ -166,8 +192,8 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
     );
   }
 
-  Row _renderWaitRequest(
-      BuildContext context, TeacherModel teacher, StudentModel student, int index) {
+  Row _renderWaitRequest(BuildContext context, TeacherModel teacher,
+      StudentModel student, int index) {
     return Row(
       children: [
         IconButton(
@@ -176,8 +202,7 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
                 context: context,
                 content: '요청을 수락 하시겠습니까?',
                 onPressed: () async {
-                  final result = await _acceptConnectRequest(
-                      teacher, student);
+                  final result = await _acceptConnectRequest(teacher, student);
 
                   if (result.responseCode == CONST_SUCCESS_CODE) {
                     Navigator.pop(context);
@@ -225,7 +250,8 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
   }
 
   Future<void> _setRequestList() async {
-    final response = await _teacherProvider.confirmAllConnectRequest(_user.userId, _user.user_gubun);
+    final response = await _teacherProvider.confirmAllConnectRequest(
+        _user.userId, _user.user_gubun);
 
     if (response.responseCode == CONST_SUCCESS_CODE) {
       final requestList = response.responseObj! as List<ConnectRequestModel>?;
@@ -245,8 +271,9 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
     final List<ConnectModel>? connectList = _user.connectInfo;
     if (connectList != null && connectList.isNotEmpty) {
       print('point1');
-      final readResult = await _teacherProvider.getAllConnectedStudentList(connectList);
-      if(readResult.responseCode==CONST_SUCCESS_CODE){
+      final readResult =
+          await _teacherProvider.getAllConnectedStudentList(connectList);
+      if (readResult.responseCode == CONST_SUCCESS_CODE) {
         print('point2');
         final studentList = readResult.responseObj as List<StudentModel>;
         setState(() {
@@ -256,12 +283,12 @@ class _StudentListPopUpState extends ConsumerState<StudentListPopUp> {
     } else {
       print('studentList : null');
     }
-
   }
 
   Future<void> _refreshUserInfo() async {
-    final refreshResult = await _teacherProvider.refreshTeacherInfo(_user.userId);
-    if(refreshResult.responseCode!=CONST_SUCCESS_CODE){
+    final refreshResult =
+        await _teacherProvider.refreshTeacherInfo(_user.userId);
+    if (refreshResult.responseCode != CONST_SUCCESS_CODE) {
       showAlertPopUp(context: context, title: refreshResult.responseMsg!);
     } else {
       setState(() {

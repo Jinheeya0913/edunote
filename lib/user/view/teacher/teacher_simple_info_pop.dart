@@ -5,7 +5,7 @@ import 'package:goodedunote/common/component/custom_elevated_button.dart';
 import 'package:goodedunote/common/component/popup/PopupTitle.dart';
 import 'package:goodedunote/common/component/user_drawer.dart';
 import 'package:goodedunote/common/const/const_size.dart';
-import 'package:goodedunote/common/func/commonFunc.dart';
+import 'package:goodedunote/common/func/popupFunc.dart';
 import 'package:goodedunote/edu/view/lecture_search_screen.dart';
 import 'package:goodedunote/user/func/user_func.dart';
 import 'package:goodedunote/user/model/teahcer_model.dart';
